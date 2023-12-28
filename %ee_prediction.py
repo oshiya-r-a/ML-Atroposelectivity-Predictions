@@ -212,7 +212,7 @@ def svr(X_norm, y):
 
   for i in range(1, 201):
     X_train, X_test, y_train, y_test = train_test_split(X_norm, y, test_size=0.3, random_state=i)
-    svr = SVR(kernel='poly',gamma='scale', C=10, epsilon=1, degree=1)
+    svr = SVR(kernel='poly',gamma=0.1, C=10, epsilon=0.1, degree=3)
     cv_scores = cross_val_score(svr, X_train, y_train, cv=10, scoring='neg_mean_squared_error')
     cv_rmse_scores = np.sqrt(-cv_scores)
     avg_rmse = np.mean(cv_rmse_scores)
@@ -224,7 +224,7 @@ def svr(X_norm, y):
   cv_rmse = best_rmse
 
   X_train, X_test, y_train, y_test = train_test_split(X_norm, y, test_size=0.3, random_state=best_rs)
-  svr = SVR(kernel='poly',gamma='scale', C=10, epsilon=1, degree=1)
+  svr = SVR(kernel='poly',gamma=0.1, C=10, epsilon=0.1, degree=3)
   svr.fit(X_train, y_train)
 
   # Predictions on train set
@@ -269,7 +269,7 @@ def enr(X_norm, y):
 
   for i in range(1, 101):
     X_train, X_test, y_train, y_test = train_test_split(X_norm, y, test_size=0.3, random_state=i)
-    elastic_net_model = ElasticNet(alpha=0.1, l1_ratio=0.0)
+    elastic_net_model = ElasticNet(alpha=0.02, l1_ratio=0.0)
     cv_scores = cross_val_score(elastic_net_model, X_train, y_train, cv=10, scoring='neg_mean_squared_error')
     cv_rmse_scores = np.sqrt(-cv_scores)
     avg_rmse = np.mean(cv_rmse_scores)
@@ -281,7 +281,7 @@ def enr(X_norm, y):
   cv_rmse = best_rmse
 
   X_train, X_test, y_train, y_test = train_test_split(X_norm, y, test_size=0.3, random_state=best_rs)
-  elastic_net_model = ElasticNet(alpha=0.1, l1_ratio=0.0)
+  elastic_net_model = ElasticNet(alpha=0.02, l1_ratio=0.0)
   elastic_net_model.fit(X_train, y_train)
 
   # Predictions on train set
